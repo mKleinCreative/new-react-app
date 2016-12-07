@@ -9,11 +9,12 @@ const webpack = require('webpack')
 const webpackMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const config = require('./webpack.config.js')
-
+console.log('entered 0')
 const app = express()
 
 app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')))
 app.use(logger('dev'))
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -21,7 +22,7 @@ app.use(cookieParser())
 const compiler = webpack(config)
 const middleware = webpackMiddleware(compiler, {
   publicPath: config.output.publicPath,
-  contentBase: 'src',
+  // contentBase: 'src',
   stats: {
     colors: true,
     hash: false,
@@ -35,30 +36,6 @@ const middleware = webpackMiddleware(compiler, {
 app.use(middleware)
 app.use(webpackHotMiddleware(compiler))
 
-app.get('*', (req, res) => {
-  res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')))
-})
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use((err, req, res) => {
-    res.status(err.status || 500)
-    res.render('error', {
-      message: err.message,
-      error: err
-    })
-  })
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use((err, req, res) => {
-  res.status(err.status || 500)
-  res.render('error', {
-    message: err.message,
-    error: {}
-  })
-})
+app.use(express.static('client'))
 
 module.exports = app
