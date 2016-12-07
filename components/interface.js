@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Outcome from './outcome.js'
+import Hand from './hand.js'
+import Dealer from './dealer.js'
+
 
 export default class Interface extends Component {
 render() {
@@ -10,8 +13,8 @@ render() {
       <Outcome />
        {/* but the following code is owned by Interface */}
       <div >
-        <a>Dealer Score : </a>
-        <a>Player Score : </a>
+        <a>Dealer Score : <Dealer totalValue /></a>
+        <a>Player Score : <Hand totalValue /></a>
       </div>
       <button>Deal</button>
       <button>Hit</button>
