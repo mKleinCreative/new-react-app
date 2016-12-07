@@ -1,24 +1,26 @@
 import React, { Component } from 'react'
 import Card from './card.js'
+import deck from './card.js'
 
 
-Card.all = function(){
-
-  var cards = []
-  suit.forEach(suit => {
-    rank.forEach(rank => {
-      cards.push(new Card(rank, suit))
-    })
-  })
-  return cards;
-}
+// Card.all = function(){
+//
+//   var cards = []
+//   suit.forEach(suit => {
+//     rank.forEach(rank => {
+//       cards.push(new Card(rank, suit))
+//     })
+//   })
+//   return cards;
+// }
 // How to card get the total
 export default class Hand extends Component {
   render() {
-    return ( <div>
-      <div> <Card rank = "2" suit = "Spade"/> </div>
-      <div> <Card rank = "Jack" suit = "Heart"/> </div>
-    </div>
+    return (
+      <div>
+        {/* <div> <Card deck /> </div> */} H
+        <div> <Card deck="1" /> </div>
+      </div>
     )
   }
   totalValue = "69"
