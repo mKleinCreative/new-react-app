@@ -7,6 +7,7 @@ import Game from '../src/game'
 
 import Player from './player'
 import ScoreBoard from './scoreboard'
+import Outcome from './outcome'
 
 export default class Table extends Component {
   constructor( props ) {
@@ -16,20 +17,22 @@ export default class Table extends Component {
   }
 
   hit() {
-    this.state.game.hit()
+    this.state.game.hit(this.state.game.players[1])
     this.setState({ game: this.state.game })
   }
 
   render() {
     const { game } = this.state
-    console.log( 'I rendered!!', game )
+
+    const allowedToHit = this.state.game.players[1].lowestHandValue < 21
 
     return (
       <div>
+        <Outcome players={this.state.game.players}/>
         {game.players.map( (player, index) =>
           <Player {...player} key={`player-${index}`} />
         )}
-        <ScoreBoard onPlayerHit={this.hit.bind(this)} />
+        <ScoreBoard onPlayerHit={this.hit.bind(this)} allowedToHit={allowedToHit} />
       </div>
     )
   }

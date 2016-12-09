@@ -2,12 +2,22 @@ import React, { Component } from 'react'
 
 export default class ScoreBoard extends Component {
   render() {
-    const { onPlayerHit } = this.props
+    const { onPlayerHit, onPlayerStay, resetGame, allowedToHit } = this.props
 
+    const hitButton = allowedToHit ?
+      <button onClick={onPlayerHit}>Hit</button> :
+      null
+    const stayButton = allowedToHit ?
+      <button onClick={onPlayerStay}>Stay</button> :
+      null
+    const resetButton = allowedToHit ?
+      null :
+      <button onClick={resetGame}>New Game</button>
     return (
       <div>
-        Scoreboard!
-        <button onClick={onPlayerHit}>Hit</button>
+        {hitButton}
+        {stayButton}
+        {resetButton}
       </div>
     )
   }
