@@ -28,7 +28,7 @@ export default class Table extends Component {
   }
 
   newGame() {
-    this.state = { game: new Game() }
+    this.setState( { game: new Game()} )
   }
 
   render() {
@@ -43,9 +43,12 @@ export default class Table extends Component {
         {game.players.map( (player, index) =>
           <Player {...player} key={`player-${index}`} />
         )}
-        <ScoreBoard onPlayerHit={this.hit.bind(this)} allowedToHit={allowedToHit}
-        onPlayerStay={this.stay.bind(this)}
-        onNewGame={this.newGame.bind(this)} />
+        <ScoreBoard
+          allowedToHit={allowedToHit}
+          onPlayerHit={this.hit.bind(this)}
+          onPlayerStay={this.stay.bind(this)}
+          onNewGame={this.newGame.bind(this)}
+        />
         <GameStatus status={status} message={message} />
       </div>
     )

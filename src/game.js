@@ -52,6 +52,7 @@ export default class Game {
   }
 
   hit( player ) {
+
     const { hand, stay } = player
     // const hand = player.hand
     // const stay = player.stay
@@ -60,9 +61,11 @@ export default class Game {
 
     player.lowestHandValue = lowestHandValue(hand)
     player.highestHandValue = highestHandValue(hand)
-
+    if (player.highestHandValue > 21) //check for ACE, Change latest.ACE.value to 1
     if (player.lowestHandValue > 21) this.status = LOSE
     if (player.lowestHandValue < 21 && stay !== true) this.status = INPROG
+    if (player.lowestHandValue < 21 && hand.length === 5) this.status = WIN
+    if (player.lowestHandValue === 21) this.status = WIN
 
     this.updateStatus()
     // console.log(this)
