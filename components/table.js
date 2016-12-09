@@ -7,7 +7,6 @@ import Game from '../src/game'
 
 import Player from './player'
 import ScoreBoard from './scoreboard'
-import Outcome from './outcome'
 import GameStatus from './gamestatus'
 
 export default class Table extends Component {
@@ -39,7 +38,6 @@ export default class Table extends Component {
 
     return (
       <div>
-        <Outcome players={this.state.game.players}/>
         {game.players.map( (player, index) =>
           <Player {...player} key={`player-${index}`} />
         )}

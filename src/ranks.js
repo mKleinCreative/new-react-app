@@ -1,5 +1,5 @@
 const RANKS = [
-  { name: 'A', value: 11  },
+  { name: 'ACE', value: 11  },
   { name: '2', value: 2 },
   { name: '3', value: 3 },
   { name: '4', value: 4 },
