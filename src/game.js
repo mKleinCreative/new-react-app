@@ -2,12 +2,15 @@ import Deck from './deck'
 
 const WIN = 'win'
 const LOSE = 'lose'
+const FAIL = 'fail'
 const INPROG = 'in progress'
 const dealerTurn = "Deadler is fplaery"
 
 
   // when dealer turn are > 16 stay
   // when this.status === dealerTurn then run dealer AI
+
+
 
 export default class Game {
   constructor() {
@@ -37,33 +40,41 @@ export default class Game {
   updateStatus() {
     if( this.status === '' ) {
       this.message = ''
+    } else if (this.status === FAIL) {
+      this.message = '.... Seriously tho? liek why do you live, you are stealing my air and the air of the people around you at this point, you should really consider your life choices and how they have broughten you to this point in time.'
     } else if( this.status === LOSE ) {
       this.message = 'Your family is ashamed of you!'
-    } else if (this.status === WIN ){
+    } else if (this.status === WIN ) {
       this.message = 'You are the best winner!'
     }
   }
 
   stay( player ) {
     const {hand, stay} = player
+    const dealer = this.players[ 0 ]
 
-    if (player.stay === false) {player.stay = true}
+    player.stay = true
 
-    if (player.bestHandValue === 21) this.status = WIN
+    // This is where we manager the dealer hits
+    if (dealer.bestHandValue >= player.bestHandValue && player.stay === true) {this.status = FAIL} else{
+      while( bestHandValue( dealer.hand ) < 17 ) {
+        this.hit( dealer )
+      }
+    }
 
-    if (this.players[0].bestHandValue > 21) this.status = WIN
-    if (this.players[1].bestHandValue > 21) this.status = LOSE
-    if (this.players[0].bestHandValue > player.bestHandValue && player.stay === true) this.status = LOSE
-    if (this.players[0].bestHandValue === player.bestHandValue ) this.status = LOSE
+    if (dealer.bestHandValue < player.bestHandValue && player.stay === true) this.status = WIN
+    if (dealer.bestHandValue > 21 ) this.status = WIN
+    if (dealer.bestHandValue === player.bestHandValue ) this.status = LOSE
     if (player.bestHandValue < 21 && hand.length === 5) this.status = WIN
 
     this.updateStatus()
-    console.log('sup?', this);
+
   }
 
   hit( player ) {
 
     const { hand, stay } = player
+    const dealer = this.players[ 0 ]
 
     if (player.lowestHandValue < 21) hand.push( this.deck.deal() )
 
@@ -72,14 +83,23 @@ export default class Game {
     player.bestHandValue = bestHandValue(hand)
 
     if (player.bestHandValue > 21) this.status = LOSE
-    if (player.bestHandValue < 21 && stay !== true) this.status = INPROG
-    if (player.bestHandValue === 21) this.status = WIN
+    if (dealer.bestHandValue === player.bestHandValue ) this.status = LOSE
+    // if (player.bestHandValue < 21 && stay !== true) this.status = INPROG
 
     this.updateStatus()
   }
 
+  // //Dealer logic
+  //   dealio() {
+  //     if (this.players[0].bestHandValue < 17 && player.stay === true) players[0].hand.push(this.deck.deal())
+  //   }
 
 }
+
+// export class Dealer {
+//  DEALIO = this.game.players[0]
+//   if (bestHandValue)
+// }
 
 
 const lowestHandValue = hand =>
@@ -94,7 +114,6 @@ const highestHandValue = hand =>
 const bestHandValue = hand => {
   let handValue = highestHandValue(hand)
   let numAces = hand.filter(card => card.name === "ACE" ).length
-  console.log('number of aces', numAces );
   while (handValue > 21 && numAces > 0) {
     handValue -= 10
     numAces -= 1
