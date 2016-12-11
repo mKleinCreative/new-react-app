@@ -25,7 +25,6 @@ export default class Table extends Component {
 
     // const TSGP = this.state.game.players
     this.state.game.stay(this.state.game.players[1])
-    // if (this.players[0].bestHandValue < 17 && player.stay === true) this.state.game.hit(this.state.game.players[0])
     this.setState({ game: this.state.game })
   }
 
@@ -37,7 +36,8 @@ export default class Table extends Component {
     const { game } = this.state
     const { status, message } = game
 
-    const allowedToHit = this.state.game.players[1].lowestHandValue < 21 && this.state.game.players[1].stay === false
+    const allowedToHit = this.state.game.players[1].lowestHandValue <= 21 && this.state.game.players[1].stay === false
+
 
     return (
       <div>
